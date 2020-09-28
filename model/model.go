@@ -13,7 +13,10 @@ var db *gorm.DB
 func Setup() {
 	var err error
 	dsn := "sqlserver://sa:12345678@localhost:1433?database=godb"
-	db, err = gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(sqlserver.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true,
+		PrepareStmt:            true,
+	})
 
 	if err != nil {
 		log.Fatalf("models.Setup err: %v", err)
